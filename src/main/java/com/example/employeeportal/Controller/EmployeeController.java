@@ -31,6 +31,25 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
+    //url: localhost:8070/employeeportal/employeeByName?name=Jeba
+    @GetMapping("/employeeByName")
+    public List<EmployeeDTO> getEmployeeByName(@RequestParam("name") String name){
+        return employeeService.getEmployeeByName(name);
+    }
+
+    //url : localhost:8070/employeeportal/employeeBySalary?salary=20000
+    @GetMapping("/employeeBySalary")
+    public List<EmployeeDTO> getEmployeeBySalary(@RequestParam("salary") Long salary){
+        return employeeService.getEmployeeBySalaryEqualsTo(salary);
+    }
+
+    //url : localhost:8070/employeeportal/employBySalary?salary=50000
+    @GetMapping("/employBySalary")
+    public List<EmployeeDTO> getEmployBySalary(@RequestParam("salary") Long salary){
+        return employeeService.getEmployeeBySalary(salary);
+    }
+
+
     //url : localhost:8070/employeeportal/updateEmployee/3
     @PutMapping("/updateEmployee/{id}")
     public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employee, @PathVariable Long id){

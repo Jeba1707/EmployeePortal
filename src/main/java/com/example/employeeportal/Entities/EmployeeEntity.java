@@ -16,6 +16,6 @@ public class EmployeeEntity {
     @Column(name = "Name", length=20, nullable = false)
     private String employeeName;
     private int age;
-    private Long Salary;
+    private Long salary;
 
 }

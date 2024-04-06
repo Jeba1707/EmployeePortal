@@ -39,6 +39,31 @@ public class EmployeeService {
         return mapDto(employeeEntity);
     }
 
+    public List<EmployeeDTO> getEmployeeByName(String name){
+        List<EmployeeEntity> list = employeeRepo.findByEmployeeName(name);
+        List<EmployeeDTO> dtolist = new ArrayList<>();
+        list.forEach(e->dtolist.add(mapDto(e)));
+
+        return dtolist;
+    }
+
+    public List<EmployeeDTO> getEmployeeBySalaryEqualsTo(Long salary){
+        List<EmployeeEntity> list = employeeRepo.findAllBySalaryEquals(salary);
+        List<EmployeeDTO> dtolist = new ArrayList<>();
+        list.forEach(e->dtolist.add(mapDto(e)));
+
+        return dtolist;
+    }
+
+    public List<EmployeeDTO> getEmployeeBySalary(Long salary){
+        List<EmployeeEntity> list = employeeRepo.getEmployeesBySalary(salary);
+        List<EmployeeDTO> dtolist = new ArrayList<>();
+        list.forEach(e->dtolist.add(mapDto(e)));
+
+        return dtolist;
+    }
+
+
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO,Long id){
         Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepo.findById(id);
         EmployeeEntity employeeEntity = optionalEmployeeEntity.get();
