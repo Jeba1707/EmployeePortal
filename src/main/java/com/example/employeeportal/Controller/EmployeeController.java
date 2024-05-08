@@ -20,9 +20,10 @@ public class EmployeeController {
     }
 
     //url : localhost:8070/employeeportal/employlist
+   // localhost:8070/employeeportal/employlist?page=0&size=4&sort=asc
     @GetMapping("/employlist")
-    public List<EmployeeDTO> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public List<EmployeeDTO> getAllEmployees(@RequestParam(defaultValue = "0",required = false) Integer page,@RequestParam(defaultValue = "3",required = false) Integer size,@RequestParam(defaultValue = "asc",required = false) String sort) {
+        return employeeService.getAllEmployees(page,size,sort);
     }
 
     //url : localhost:8070/employeeportal/employ/2
@@ -43,7 +44,7 @@ public class EmployeeController {
         return employeeService.getEmployeeBySalaryEqualsTo(salary);
     }
 
-    //url : localhost:8070/employeeportal/employBySalary?salary=50000
+    //url : localhost:8070/employeeportal/employBySalary?salary=19000
     @GetMapping("/employBySalary")
     public List<EmployeeDTO> getEmployBySalary(@RequestParam("salary") Long salary){
         return employeeService.getEmployeeBySalary(salary);
@@ -61,6 +62,9 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
     }
+
+
+
 
 }
 //           A JSON

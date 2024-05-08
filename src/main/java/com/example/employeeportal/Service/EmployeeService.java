@@ -4,6 +4,11 @@ import com.example.employeeportal.DTO.EmployeeDTO;
 import com.example.employeeportal.Entities.EmployeeEntity;
 import com.example.employeeportal.Repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,15 +25,17 @@ public class EmployeeService {
      return employeeDTO;
     }
 
-    public List<EmployeeDTO> getAllEmployees(){
+    public List<EmployeeDTO> getAllEmployees(Integer page,Integer size,String sortOrder){
+        Sort sort = sortOrder.equals("asc") ? Sort.by("employeeName").ascending(): Sort.by("employeeName").descending();
+        Pageable paging = PageRequest.of(page,size,sort);
+        Page<EmployeeEntity> pageContent = employeeRepo.findAll(paging);
+        List<EmployeeEntity> all = pageContent.getContent();
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
-        List<EmployeeEntity> employeeEntityList = employeeRepo.findAll();
-        for(EmployeeEntity employee:employeeEntityList){
+        for(EmployeeEntity employee:all){
            employeeDTOS.add(mapDto(employee));
         }
         return employeeDTOS;
     }
-
     public EmployeeDTO getEmployeeById(Long id){
         Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepo.findById(id);
         EmployeeEntity employeeEntity = optionalEmployeeEntity.get();
@@ -74,6 +81,7 @@ public class EmployeeService {
         employeeEntity.setEmployeeName(employeeDTO.getName());
         employeeEntity.setAge(employeeDTO.getAge());
         employeeEntity.setSalary(employeeDTO.getSalary());
+        employeeEntity.setAddress(employeeDTO.getAddress());
         employeeRepo.save(employeeEntity);
         return mapDto(employeeEntity);
 
@@ -89,7 +97,7 @@ public class EmployeeService {
       employeeRepo.delete(employeeEntity);
     }
     public EmployeeDTO mapDto(EmployeeEntity employeeEntity){
-        EmployeeDTO employeeDTO = new EmployeeDTO(employeeEntity.getEmployeeName(),employeeEntity.getAge(),employeeEntity.getSalary());
+        EmployeeDTO employeeDTO = new EmployeeDTO(employeeEntity.getEmployeeName(),employeeEntity.getAge(),employeeEntity.getSalary(), employeeEntity.getAddress());
         return employeeDTO;
 
     }
@@ -99,6 +107,7 @@ public class EmployeeService {
             employeeEntity.setEmployeeName(employeeDTO.getName());
             employeeEntity.setAge(employeeDTO.getAge());
             employeeEntity.setSalary(employeeDTO.getSalary());
+            employeeEntity.setAddress(employeeDTO.getAddress());
            return employeeRepo.save(employeeEntity);
 
     }

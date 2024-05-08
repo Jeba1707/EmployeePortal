@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register Form</title>
+</head>
+<body class="container">
+   <h3>Employee Register Form</h3>
+<!--<form th:action="@{/successfull}" th:object="${employee}" th:method="post">-->
+<!--    <label for = "name" >Name:</label>-->
+<!--    <input type="text" th:field="*{employee.name}" id="name" required>-->
+<!--    <label for = "age" >Age:</label>-->
+<!--    <input type="text" th:field="*{employee.age}" id="age" required>-->
+<!--    <label for = "salary" >Salary:</label>-->
+<!--    <input type="text" th:field="*{employee.salary}" id="salary" required>-->
+<!--    <label for = "address" >Name:</label>-->
+<!--    <input type="text" th:field="*{employee.address}" id="address" required>-->
+<!--    <button type="submit">Register</button>-->
+<!--</form>-->
+
+
+   <form th:object="${employee}" method="post" th:action="@{/successfull}">
+       <input type="text" th:field="${employee.name}" placeholder="Username" />
+       <input type="number" th:field="${employee.age}" placeholder="Age" />
+       <input type="number" th:field="${employee.salary}" placeholder="Salary" />
+       <input type="text" th:field="${employee.address}" placeholder="Address" />
+       <button type="submit">Create User</button>
+   </form>
+</body>
+</html>

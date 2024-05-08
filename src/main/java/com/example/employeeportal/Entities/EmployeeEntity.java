@@ -17,5 +17,6 @@ public class EmployeeEntity {
     private String employeeName;
     private int age;
     private Long salary;
+    private String address;
 
 }
